@@ -28,6 +28,10 @@
   margin-left: 25%;
 }
 
+.heading {
+ color : orangered;
+}
+
 .code {
   color: black;
 }
