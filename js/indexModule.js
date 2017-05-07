@@ -6,6 +6,8 @@ var IndexModule = (function(){
   var $searchBar = $('#searchBar');
   var $output = $('#output');
 
+  var clipboard = null;
+
   // Setup listeners
   $searchButton.click(function(){
       var val = $('#search-friends').val();
@@ -24,12 +26,17 @@ var IndexModule = (function(){
 
 
    var insertResults = function (data) {
+     $output.html('');
+
+      var id = 0;
       data.forEach(function(d){
-          insertElement(d);
+          insertElement(d, 'R'+id);
+          id++;
       });
+      clipboard = new Clipboard('.copy-code');
    }
 
-   var insertElement = function(element){
+   var insertElement = function(element, id){
 
      // Create all the matches string
      var matches = "";
@@ -37,11 +44,10 @@ var IndexModule = (function(){
        matches += " " + m.description;
      });
 
-     var groupHTML = "<h4>Group code :"+element.group.description+ " " + element.division.code +""+ element.group.code +"</h4>"
+     var groupHTML = "<h5>Group, "+element.group.description+ " " + element.division.code +""+ element.group.code +"</h5>"
 
      $output.append(
-       '<div class="row"><div class="output">'+groupHTML+'<h5>Code '+element.code+'</h5><p>'+element.matches[0].description+'</p><hr></div></div>'
+       '<div class="row"><div class="output"><h4>'+element.matches[0].description+'</h4><h5 class="code">Code <span value="bob" id="'+id+'">'+element.code+'</span></h5><button  type="button" class="btn copy-code" data-clipboard-target="#'+id+'">Copy Code</button>'+groupHTML+'<hr></div></div>'
      );
    }
-
 })();
