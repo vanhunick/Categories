@@ -2,6 +2,8 @@ var Data = (function(){
 
 
 var search = function (search) {
+  var search = search.toLowerCase();
+
   var fullstructure = DataModule.structure;
 
   var curDivision = {};
@@ -42,11 +44,36 @@ var search = function (search) {
 }
 
 var matchActivity = function(search, code) {
-  // console.log(search, code);
+  var words = search.split(' '); // Split search into words
 
+  // Go through all activities and match the description
   return DataModule.activities.filter(d => {
-    // console.log(d.description);
-    return d.code === code && d.index.includes(search)
+    if(d.code === code){
+
+      // Remove commas and change to lower case
+      var indexStripped = d.index.replace(/,/g, '').toLowerCase();
+
+      // Split string into words
+      var descriptionWords = indexStripped.split(' ');
+
+      var match = false;
+
+      //
+      for(var i = 0; i < words.length; i++){
+          for(var j = 0; j < descriptionWords.length; j++){
+            if(descriptionWords[j].includes(words[i])){
+              match = true;
+              break;
+            }
+          }
+        if(match === false){
+          return false;
+        }
+        match = false;
+      }
+      return true;
+    }
+    return false;
   });
 }
 
