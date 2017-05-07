@@ -1,0 +1,29 @@
+/*Search box Styling*/
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.list-wrap label {
+  float:left;
+  color:#00BDE8;
+}
+
+.adjust-but {
+    margin-top: 5%;
+    padding: 0.6em;
+}
+
+
+.search-box {
+  float:left;
+  clear:left;
+  width:50%;
+  padding:0.4em;
+  font-size:1em;
+  color:#555;
+  margin-bottom: 1%;
+  margin-top: 5%;
+  margin-left: 25%;
+}
+
+.output {
+  margin-left: 25%;
+}
