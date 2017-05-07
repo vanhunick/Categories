@@ -39,15 +39,18 @@ var IndexModule = (function(){
    var insertElement = function(element, id){
 
      // Create all the matches string
-     var matches = "";
+     var matches = "<ul>";
      element.matches.forEach(m => {
-       matches += " " + m.description;
+       matches += "<li>" + m.index + "</li>";
      });
+
+     matches += '</ul>';
+
      var classDescriptionHTML = '<h4>'+element.class.description+'</h4>';
      var groupHTML = "<h5>Group, "+element.group.description+ " " + element.division.code +""+ element.group.code +"</h5>"
 
      $output.append(
-       '<div class="row"><div class="output">'+classDescriptionHTML+'<h4>'+element.matches[0].index+'</h4><h5 class="code">Code <span value="bob" id="'+id+'">'+element.code+'</span></h5><button  type="button" class="btn copy-code" data-clipboard-target="#'+id+'">Copy Code</button>'+groupHTML+'<hr></div></div>'
+       '<div class="row"><div class="output">'+classDescriptionHTML+'<h4>'+matches+'</h4><h5 class="code">Code <span value="bob" id="'+id+'">'+element.code+'</span></h5><button  type="button" class="btn copy-code" data-clipboard-target="#'+id+'">Copy Code</button>'+groupHTML+'<hr></div></div>'
      );
    }
 })();
