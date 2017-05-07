@@ -46,7 +46,7 @@ var IndexModule = (function(){
 
      matches += '</ul>';
 
-     var classDescriptionHTML = '<h4 class="heading">'+element.class.description+'</h4>';
+     var classDescriptionHTML = '<h4 class="heading"><b>'+element.class.description+'</b></h4>';
      var groupHTML = "<h5>"+element.group.description+ " " + element.division.code +""+ element.group.code +"</h5>"
 
      $output.append(
