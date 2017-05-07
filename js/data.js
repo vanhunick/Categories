@@ -77,60 +77,6 @@ var matchActivity = function(search, code) {
   });
 }
 
-
-  var categories = [];
-
-  // Example category object
-  // var ojbect = {
-  //   "division" : 'a'
-  //   "divisionDescription" : 'Agraculture',
-
-  //   "Subdivision" : 12,
-  //   "SubdivisionDescription" : "more detailed",
-
-  //   "group" : 123,
-  //   "SgroupDescription" : "more detailed",
-
-  //   "class" : 1234,
-  //   "classDescription" : "As detailed as it gets",
-
-  //   "activities" : ["shoe retailing"];
-  // }
-
-
-  var readData = function (data) {
-    var i;
-
-    // Go through the entire data string
-    for(i = 0; i < data.length; i++){
-        var curChar = data.chatAt(i);
-
-        var entry = {}
-        // Check if character is a letter
-        if(curChar ) { // TODO
-            //
-            entry["division"] = [curChar, 'TODO'];
-
-            i++;
-        } else {
-          //must be a number
-
-
-        }
-
-    }
-  }
-
-  var scanCode = function (code) {
-    if(code.length === 2){ // Subdivision
-
-    } else if(code.length === 3) {  // Group
-
-    } else if (code.length === 4) { // Class
-
-    }
-  }
-
   return {
     search : search
   }
