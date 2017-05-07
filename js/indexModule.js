@@ -47,7 +47,7 @@ var IndexModule = (function(){
      matches += '</ul>';
 
      var classDescriptionHTML = '<h4>'+element.class.description+'</h4>';
-     var groupHTML = ""+element.group.description+ " " + element.division.code +""+ element.group.code +"</h5>"
+     var groupHTML = "<h5>"+element.group.description+ " " + element.division.code +""+ element.group.code +"</h5>"
 
      $output.append(
        '<div class="row"><div class="output">'+classDescriptionHTML+'<h4>'+matches+'</h4><h5 class="code">Code <span value="bob" id="'+id+'">'+element.code+'</span></h5><button  type="button" class="btn copy-code" data-clipboard-target="#'+id+'">Copy Code</button>'+groupHTML+'<hr></div></div>'
