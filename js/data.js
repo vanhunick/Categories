@@ -37,7 +37,7 @@ var search = function (search) {
           matches : classActivities,
           code : curDivision.code + "" + s.code + '00'
         });
-      }
+      } else {
 
       // Here we should search all that match
       var set = matchActivity(search, s.code);
@@ -51,6 +51,7 @@ var search = function (search) {
           matches : set,
           code : curDivision.code + "" + s.code + '00'
         });
+      }
       }
     }
   });
