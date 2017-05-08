@@ -7,7 +7,7 @@
 }
 
 .adjust-but {
-    margin-top: 5%;
+    
     padding: 0.6em;
 }
 
@@ -20,11 +20,19 @@
   font-size:1em;
   color:#555;
   margin-bottom: 1%;
-  margin-top: 5%;
   margin-left: 25%;
 }
 
 .output {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.title {
+  margin-top: 5%;
+}
+
+.center {
   margin-left: 25%;
 }
 
