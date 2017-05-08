@@ -4662,10 +4662,6 @@ var group = [
 
 var classes = [
   {
-    "code": "Class code",
-    "description": "Class descriptor"
-  },
-  {
     "code": "0111",
     "description": "Nursery Production (Under Cover)"
   },
