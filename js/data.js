@@ -1,16 +1,14 @@
 var Data = (function(){
 
-
 var search = function (search) {
   var search = search.toLowerCase();
-
   var fullstructure = DataModule.structure;
-
   var curDivision = {};
   var curSubdivision = {};
   var curGroup = {};
   var curClass = {};
 
+  // Match all the keywords either in the category header or the activities
   var matches = [];
 
   fullstructure.forEach( s => {
@@ -26,31 +24,25 @@ var search = function (search) {
     } else if (s.code.length === 4) { // Class
       curClass = {code : s.code, description : s.description};
 
+      // Firs try match all the words to the class header
       if(matchClassDescriptor(search, s.code).length > 0){
           var classActivities = findActivitiesForClass(s.code);
 
           matches.push({
-          division : curDivision,
-          subdivision : curSubdivision,
-          group : curGroup,
-          class : curClass,
-          matches : classActivities,
-          code : curDivision.code + "" + s.code + '00'
-        });
-      }
-
+          division : curDivision,subdivision : curSubdivision,group : curGroup,class : curClass,
+          matches : classActivities,code : curDivision.code + "" + s.code + '00'
+          });
+      } else {
+        
       // Here we should search all that match
       var set = matchActivity(search, s.code);
 
         if(set.length > 0){
           matches.push({
-          division : curDivision,
-          subdivision : curSubdivision,
-          group : curGroup,
-          class : curClass,
-          matches : set,
-          code : curDivision.code + "" + s.code + '00'
-        });
+          division : curDivision,subdivision : curSubdivision,group : curGroup,
+          class : curClass,matches : set,code : curDivision.code + "" + s.code + '00'
+          });
+        }        
       }
     }
   });
@@ -68,15 +60,11 @@ var matchClassDescriptor = function (search, code) {
   return DataModule.classes.filter(d => {
     if(d.code === code){
 
-      // Remove commas and 
-      var description = d.description.replace(/,/g, '').toLowerCase();
-
-
-      // Convert to words
-      var descriptionWords = description.split(' ');
+      // Convert to words and replace commas
+      var descriptionWords = d.description.replace(/,/g, '').toLowerCase().split(' ');
 
       var match = false;
-      //
+    
       for(var i = 0; i < words.length; i++){
           for(var j = 0; j < descriptionWords.length; j++){
             if(descriptionWords[j].includes(words[i])){
@@ -85,13 +73,13 @@ var matchClassDescriptor = function (search, code) {
             }
           }
         if(match === false){
-          return false;
+          return false; // One word does not match return false
         }
-        match = false;
+        match = false; // Reset match after one word is matched
       }
-      return true;
+      return true; // All words match
     }
-    return false;
+    return false; // Does not match code
   });
 }
 
@@ -102,15 +90,10 @@ var matchActivity = function(search, code) {
   return DataModule.activities.filter(d => {
     if(d.code === code){
 
-      // Remove commas and change to lower case
-      var indexStripped = d.index.replace(/,/g, '').toLowerCase();
-
       // Split string into words
-      var descriptionWords = indexStripped.split(' ');
+      var descriptionWords = d.index.replace(/,/g, '').toLowerCase().split(' ');
 
       var match = false;
-
-      //
       for(var i = 0; i < words.length; i++){
           for(var j = 0; j < descriptionWords.length; j++){
             if(descriptionWords[j].includes(words[i])){
@@ -119,18 +102,17 @@ var matchActivity = function(search, code) {
             }
           }
         if(match === false){
-          return false;
+          return false; // One word does not match return 
         }
-        match = false;
+        match = false; // Reset after matching one of the words
       }
-      return true;
+      return true; // All words match
     }
-    return false;
+    return false; // Does not match code
   });
 }
 
   return {
-    search : search
+    search : search // Make the function public
   }
-
 })();
