@@ -1,6 +1,6 @@
 var Data = (function(){
 
-var search = function (search) {
+var search = function (search, fullMatch) {
   var search = search.toLowerCase();
   var fullstructure = DataModule.structure;
   var curDivision = {};
@@ -25,7 +25,7 @@ var search = function (search) {
       curClass = {code : s.code, description : s.description};
 
       // Firs try match all the words to the class header
-      if(matchClassDescriptor(search, s.code).length > 0){
+      if(matchClassDescriptor(search, s.code, fullMatch).length > 0){
           var classActivities = findActivitiesForClass(s.code);
 
           matches.push({
@@ -33,16 +33,16 @@ var search = function (search) {
           matches : classActivities,code : curDivision.code + "" + s.code + '00'
           });
       } else {
-        
+
       // Here we should search all that match
-      var set = matchActivity(search, s.code);
+      var set = matchActivity(search, s.code, fullMatch);
 
         if(set.length > 0){
           matches.push({
           division : curDivision,subdivision : curSubdivision,group : curGroup,
           class : curClass,matches : set,code : curDivision.code + "" + s.code + '00'
           });
-        }        
+        }
       }
     }
   });
@@ -53,7 +53,7 @@ var findActivitiesForClass = function(classCode) {
     return DataModule.activities.filter(d => { return d.code === classCode});
 }
 
-var matchClassDescriptor = function (search, code) {
+var matchClassDescriptor = function (search, code, fullMatch) {
   let words = search.toLowerCase().split(' ');
 
       // Go through all activities and match the description
@@ -64,10 +64,10 @@ var matchClassDescriptor = function (search, code) {
       var descriptionWords = d.description.replace(/,/g, '').toLowerCase().split(' ');
 
       var match = false;
-    
+
       for(var i = 0; i < words.length; i++){
           for(var j = 0; j < descriptionWords.length; j++){
-            if(descriptionWords[j].includes(words[i])){
+            if(fullMatch ? descriptionWords[j] === words[i] : descriptionWords[j].includes(words[i])){
               match = true;
               break;
             }
@@ -83,7 +83,7 @@ var matchClassDescriptor = function (search, code) {
   });
 }
 
-var matchActivity = function(search, code) {
+var matchActivity = function(search, code, fullMatch) {
   var words = search.split(' '); // Split search into words
 
   // Go through all activities and match the description
@@ -96,13 +96,13 @@ var matchActivity = function(search, code) {
       var match = false;
       for(var i = 0; i < words.length; i++){
           for(var j = 0; j < descriptionWords.length; j++){
-            if(descriptionWords[j].includes(words[i])){
+            if(fullMatch ? descriptionWords[j] === words[i] : descriptionWords[j].includes(words[i])){
               match = true;
               break;
             }
           }
         if(match === false){
-          return false; // One word does not match return 
+          return false; // One word does not match return
         }
         match = false; // Reset after matching one of the words
       }

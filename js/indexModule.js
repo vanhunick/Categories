@@ -4,31 +4,49 @@ var IndexModule = (function(){
   var $searchButton = $('#searchButton');
   var $searchBar = $('#searchBar');
   var $output = $('#output');
+  var $fullMatch = $('#full-match');
+  var $sort = $('#sort');
 
   // Used to copy code to clipboard
   var clipboard = null;
+  var fullMatch = false;
+  var sort = true;
 
   // Setup listeners
   $searchButton.click(() => {
-     var data = Data.search($searchBar.val());
+     var data = Data.search($searchBar.val(), fullMatch);
      insertResults(data);
   });
 
+  $fullMatch.change(() =>{
+        fullMatch = !fullMatch;
+    });
+
+  $sort.change(() =>{
+        sort = !sort;
+  });
 
   // Respond to enter being pressed in search bar
   $searchBar.keypress((event) => {
    var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
-      var data = Data.search($searchBar.val());
+      var data = Data.search($searchBar.val(), fullMatch);
       insertResults(data);
      }
    });
 
 
    var insertResults = function (data) {
+     // sort the data
+     if(sort){
+       data.sort((a,b) => {
+         return a.class.description < b.class.description ? -1 : 1;
+       });
+     }
+
      $output.html(''); // Clear prev results
 
-     // Display amount of results 
+     // Display amount of results
      if(data.length === 0){
         $output.html('<h4 class="center">No results</h4>');
      } else {
