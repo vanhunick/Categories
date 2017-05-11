@@ -112,7 +112,21 @@ var matchActivity = function(search, code, fullMatch) {
   });
 }
 
+var getGroups = function () {
+  let uniqueClasses = [];
+
+  DataModule.classes.forEach(c => {
+    if(uniqueClasses.indexOf(c.description) === -1){
+      if(c.description !== undefined){
+          uniqueClasses.push({value : c.description});
+      }
+    }
+  });
+  return uniqueClasses;
+}
+
   return {
-    search : search // Make the function public
+    search : search,
+    getGroups : getGroups
   }
 })();

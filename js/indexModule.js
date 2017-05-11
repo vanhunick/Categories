@@ -1,3 +1,8 @@
+
+$(document).ready(function(){
+
+});
+
 var IndexModule = (function(){
 
   //Cache elements
@@ -12,6 +17,15 @@ var IndexModule = (function(){
   var fullMatch = false;
   var sort = true;
 
+
+
+    $searchBar.autocomplete({
+    lookup: Data.getGroups(),
+    onSelect: function (suggestion) {
+      var data = Data.search($searchBar.val(), fullMatch);
+      insertResults(data);
+    }
+  });
   // Setup listeners
   $searchButton.click(() => {
      var data = Data.search($searchBar.val(), fullMatch);
@@ -25,6 +39,9 @@ var IndexModule = (function(){
   $sort.change(() =>{
         sort = !sort;
   });
+
+
+
 
   // Respond to enter being pressed in search bar
   $searchBar.keypress((event) => {
